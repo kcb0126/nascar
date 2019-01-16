@@ -38,7 +38,7 @@
 
 <div class="container pt-5">
 
-    <div class="container-fluid p-3 border border-secondary">
+    <div class="container-fluid p-3 mb-4 border border-secondary">
         <div class="row">
             <div class="col-lg-7 col-md-6 col-sm-12">
                 <span class="text-danger">Salary Range(0 to 50000): </span>
@@ -53,14 +53,21 @@
             </div>
 
             <div class="col-lg-2 col-md-2 col-sm-5">
-                <button class="btn btn-danger ui-helper-hidden">Optimize Lineups!</button><br />
-                <button id="button-submit" class="btn btn-info">Download Lineups!</button>
+                <button class="btn btn-danger">Optimize Lineups!</button>
+                <button id="button-submit" class="btn btn-info mt-1">Download Lineups!</button>
             </div>
         </div>
 
     </div>
 
-    <div class="container-fluid p-3 mt-4 border border-secondary">
+    <div class="container p-3 mb-1">
+        <button id="input-button" class="btn btn-info border">Input</button>
+        <button id="exposure-button" class="btn btn-light border">Exposure</button>
+        <button id="lineups-button" class="btn btn-light border">Lineups</button>
+        <button id="userguide-button" class="btn btn-light border">User Guide</button>
+    </div>
+
+    <div id="input-table" class="container p-3 border border-secondary">
         <div class="row">
             <div class="col-1">ID</span></div>
             <div class="col-3"><span>Driver</span></div>
@@ -95,6 +102,40 @@
         </form>
     </div>
 
+    <div id="exposure-table" class="container p-3 border border-secondary" style="display: none;">
+        <div class="row">
+            <div class="col-1">ID</span></div>
+            <div class="col-2"><span>Driver</span></div>
+            <div class="col-1"><span>Salary</span></div>
+            <div class="col-2"><span>Proj</span></div>
+            <div class="col-2"><span>Min LU</span></div>
+            <div class="col-2"><span>Max LU</span></div>
+            <div class="col-2"><span>Opt LU</span></div>
+        </div>
+        <form id="form-data">
+            <input id="minsalary" type="hidden" name="minsalary" value="0">
+            <input id="maxsalary" type="hidden" name="maxsalary" value="5000">
+            <input id="lineups" type="hidden" name="lineups" value="500">
+
+
+            <hr />
+            <?php
+            foreach ($drivers as $driver) {
+                ?>
+                <div class="row mb-2">
+                    <div class="col-1"><?=$driver['ID']?></div>
+                    <div class="col-2"><?=$driver['Name']?></div>
+                    <div class="col-1">$<?=number_format($driver['Salary'])?></div>
+                    <div class="col-2"><?=$driver['Proj']?></div>
+                    <div class="col-2"><?=$driver['Min'] / 100 ?></div>
+                    <div class="col-2"><?=$driver['Max'] / 100?></div>
+                    <div class="col-2">1</div>
+                </div>
+                <?php
+            }
+            ?>
+        </form>
+    </div>
 
 </div>
 
@@ -151,6 +192,40 @@
             },
             'JSON'
         );
+    });
+
+    $("#input-button").click(function() {
+        $("#input-button").removeClass("btn-light").addClass("btn-info");
+        $("#exposure-button").removeClass("btn-info").addClass("btn-light");
+        $("#lineups-button").removeClass("btn-info").addClass("btn-light");
+        $("#userguide-button").removeClass("btn-info").addClass("btn-light");
+
+        $("#input-table").show();
+        $("#exposure-table").hide();
+    });
+
+    $("#exposure-button").click(function() {
+        $("#exposure-button").removeClass("btn-light").addClass("btn-info");
+        $("#input-button").removeClass("btn-info").addClass("btn-light");
+        $("#lineups-button").removeClass("btn-info").addClass("btn-light");
+        $("#userguide-button").removeClass("btn-info").addClass("btn-light");
+
+        $("#input-table").hide();
+        $("#exposure-table").show();
+    });
+
+    $("#lineups-button").click(function() {
+        $("#lineups-button").removeClass("btn-light").addClass("btn-info");
+        $("#input-button").removeClass("btn-info").addClass("btn-light");
+        $("#exposure-button").removeClass("btn-info").addClass("btn-light");
+        $("#userguide-button").removeClass("btn-info").addClass("btn-light");
+    });
+
+    $("#userguide-button").click(function() {
+        $("#userguide-button").removeClass("btn-light").addClass("btn-info");
+        $("#input-button").removeClass("btn-info").addClass("btn-light");
+        $("#exposure-button").removeClass("btn-info").addClass("btn-light");
+        $("#lineups-button").removeClass("btn-info").addClass("btn-light");
     });
 
 </script>
