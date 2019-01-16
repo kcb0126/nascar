@@ -87,7 +87,7 @@
                     <div class="col-2"><input name="min<?=$driver['ID']?>" class="form-control" value="<?=$driver['Min']?>"></div>
                     <div class="col-2"><input name="max<?=$driver['ID']?>" class="form-control" value="<?=$driver['Max']?>"></div>
                     <div class="col-2"><input name="proj<?=$driver['ID']?>" class="form-control" value="<?=$driver['Proj']?>"></div>
-                    <div class="col-1"><input type="checkbox" name="fave<?=$driver['ID']?>" class="form-control"></div>
+                    <div class="col-1 text-center"><input type="checkbox" name="fave<?=$driver['ID']?>"></div>
                 </div>
         <?php
             }
