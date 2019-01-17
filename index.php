@@ -204,12 +204,12 @@
                     lineupHTML = lineupHTML + '</div>';
                     lineupsDiv.append($(lineupHTML));
                 });
+
+                $("#buttons-div").show();
             },
             'JSON'
         );
 
-
-        $("#buttons-div").show();
     });
 
     $("#download-button").click(function() {
