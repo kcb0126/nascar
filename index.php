@@ -60,7 +60,7 @@
 
     </div>
 
-    <div id="buttons-div" class="container p-3 mb-1" style="display: none;">
+    <div id="buttons-div" class="container p-3 mb-1">
         <button id="input-button" class="btn btn-info border">Input</button>
         <button id="exposure-button" class="btn btn-light border">Exposure</button>
         <button id="lineups-button" class="btn btn-light border">Lineups</button>
