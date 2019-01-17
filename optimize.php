@@ -40,4 +40,4 @@ while($data = fgetcsv($handle, 1000, ",")) {
 
 fclose($fp);
 
-// exec("python3.6 main.py");
+exec("python3.6 main.py");
