@@ -19,7 +19,7 @@ with open('input.csv') as inputfile:
             lineups = int(row[2])
             isHeader = False
         else:
-            player = Player(name=row[1], cost=float(row[2]), proj=float(row[5]), pos='D')
+            player = Player(name=row[1] + '(' + row[0] + ')', cost=float(row[2]), proj=float(row[5]), pos='D')
             player_pool.append(player)
 
 
@@ -31,4 +31,5 @@ with open('output.csv', 'w') as outputfile:
     csvwriter = csv.writer(outputfile)
     for roster in rosters[0]:
         players = roster.players
-        csvwriter.writerow([players[0].name, players[1].name, players[2].name, players[3].name, players[4].name, players[5].name])
+        cost = players[0].cost + players[1].cost + players[2].cost + players[3].cost + players[4].cost + players[5].cost
+        csvwriter.writerow([players[0].name, players[1].name, players[2].name, players[3].name, players[4].name, players[5].name, cost])

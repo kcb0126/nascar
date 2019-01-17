@@ -135,7 +135,8 @@
             <div class="col-2">D3</div>
             <div class="col-2">D4</div>
             <div class="col-2">D5</div>
-            <div class="col-2">D6</div>
+            <div class="col-1">D6</div>
+            <div class="col-1">Cost</div>
         </div>
 
         <hr />
@@ -157,14 +158,14 @@
     $( "#slider" ).slider({
         range: true,
         min: 0,
-        max: 50000,
-        values: [ 0, 50000 ],
+        max: 500,
+        values: [ 0, 500 ],
         slide: function (event, ui) {
-            $("#min").text("$" + ui.values[0]);
-            $("#max").text("$" + ui.values[1]);
+            $("#min").text("$" + ui.values[0] * 100);
+            $("#max").text("$" + ui.values[1] * 100);
 
-            $("#minsalary").val(ui.values[0]);
-            $("#maxsalary").val(ui.values[1]);
+            $("#minsalary").val(ui.values[0] * 100);
+            $("#maxsalary").val(ui.values[1] * 100);
         }
     });
 
@@ -190,8 +191,12 @@
 
                 resp.forEach(function(lineup) {
                     let lineupHTML = '<div class="row mb-2">';
+                    let id = 0;
                     lineup.forEach(function(player) {
-                        lineupHTML = lineupHTML + `<div class="col-2">${player}</div>`;
+                        if(id++ < 5)
+                            lineupHTML = lineupHTML + `<div class="col-2">${player}</div>`;
+                        else
+                            lineupHTML = lineupHTML + `<div class="col-1">${player}</div>`;
                     });
                     lineupHTML = lineupHTML + '</div>';
                     lineupsDiv.append($(lineupHTML));
