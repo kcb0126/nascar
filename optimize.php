@@ -24,7 +24,6 @@ while($data = fgetcsv($handle, 1000, ",")) {
         "Min" => $_POST['min' . $data[0]],
         "Max" => $_POST['max' . $data[0]],
         "Proj" => $_POST['proj' . $data[0]],
-        "Fave" => array_key_exists('fave' . $data[0], $_POST),
     ];
     $notused = 0;
 }
@@ -33,9 +32,14 @@ $minsalary = $_POST['minsalary'];
 $maxsalary = $_POST['maxsalary'];
 $lineups = $_POST['lineups'];
 
+$fp = fopen('./results/result.csv', 'w');
+
+
 $results = [];
 
-$fp = fopen('./results/result.csv', 'w');
+for($i = 0; $i < $lineups; $i++) {
+
+}
 
 while(count($results) < $lineups) {
     $driver_ids = [];

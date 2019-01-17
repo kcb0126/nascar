@@ -53,29 +53,28 @@
             </div>
 
             <div class="col-lg-2 col-md-2 col-sm-5">
-                <button class="btn btn-danger">Optimize Lineups!</button>
-                <button id="button-submit" class="btn btn-info mt-1">Download Lineups!</button>
+                <button id="optimize-button" class="btn btn-danger">Optimize Lineups!</button>
+                <button id="download-button" class="btn btn-info mt-1">Download Lineups!</button>
             </div>
         </div>
 
     </div>
 
-    <div class="container p-3 mb-1">
+    <div id="buttons-div" class="container p-3 mb-1" style="display: none;">
         <button id="input-button" class="btn btn-info border">Input</button>
         <button id="exposure-button" class="btn btn-light border">Exposure</button>
         <button id="lineups-button" class="btn btn-light border">Lineups</button>
-        <button id="userguide-button" class="btn btn-light border">User Guide</button>
+        <button id="userguide-button" class="btn btn-light border" style="display: none;">User Guide</button>
     </div>
 
     <div id="input-table" class="container p-3 border border-secondary">
         <div class="row">
             <div class="col-1">ID</span></div>
-            <div class="col-3"><span>Driver</span></div>
+            <div class="col-4"><span>Driver</span></div>
             <div class="col-1"><span>Salary</span></div>
             <div class="col-2"><span>Min%</span></div>
             <div class="col-2"><span>Max%</span></div>
             <div class="col-2"><span>Proj</span></div>
-            <div class="col-1"><span>Fave</span></div>
         </div>
         <form id="form-data">
             <input id="minsalary" type="hidden" name="minsalary" value="0">
@@ -89,12 +88,11 @@
         ?>
                 <div class="row mb-2">
                     <div class="col-1"><?=$driver['ID']?></div>
-                    <div class="col-3"><?=$driver['Name']?></div>
+                    <div class="col-4"><?=$driver['Name']?></div>
                     <div class="col-1">$<?=number_format($driver['Salary'])?></div>
                     <div class="col-2"><input name="min<?=$driver['ID']?>" class="form-control" value="<?=$driver['Min']?>"></div>
                     <div class="col-2"><input name="max<?=$driver['ID']?>" class="form-control" value="<?=$driver['Max']?>"></div>
                     <div class="col-2"><input name="proj<?=$driver['ID']?>" class="form-control" value="<?=$driver['Proj']?>"></div>
-                    <div class="col-1 text-center"><input type="checkbox" name="fave<?=$driver['ID']?>"></div>
                 </div>
         <?php
             }
@@ -105,36 +103,30 @@
     <div id="exposure-table" class="container p-3 border border-secondary" style="display: none;">
         <div class="row">
             <div class="col-1">ID</span></div>
-            <div class="col-2"><span>Driver</span></div>
+            <div class="col-4"><span>Driver</span></div>
             <div class="col-1"><span>Salary</span></div>
             <div class="col-2"><span>Proj</span></div>
             <div class="col-2"><span>Min LU</span></div>
             <div class="col-2"><span>Max LU</span></div>
-            <div class="col-2"><span>Opt LU</span></div>
         </div>
-        <form id="form-data">
-            <input id="minsalary" type="hidden" name="minsalary" value="0">
-            <input id="maxsalary" type="hidden" name="maxsalary" value="5000">
-            <input id="lineups" type="hidden" name="lineups" value="500">
 
-
-            <hr />
-            <?php
-            foreach ($drivers as $driver) {
-                ?>
-                <div class="row mb-2">
-                    <div class="col-1"><?=$driver['ID']?></div>
-                    <div class="col-2"><?=$driver['Name']?></div>
-                    <div class="col-1">$<?=number_format($driver['Salary'])?></div>
-                    <div class="col-2"><?=$driver['Proj']?></div>
-                    <div class="col-2"><?=$driver['Min'] / 100 ?></div>
-                    <div class="col-2"><?=$driver['Max'] / 100?></div>
-                    <div class="col-2">1</div>
-                </div>
-                <?php
-            }
+        <hr />
+        <?php
+        foreach ($drivers as $driver) {
             ?>
-        </form>
+            <div class="row mb-2">
+                <div class="col-1"><?=$driver['ID']?></div>
+                <div class="col-2"><?=$driver['Name']?></div>
+                <div class="col-1">$<?=number_format($driver['Salary'])?></div>
+                <div class="col-2"><?=$driver['Proj']?></div>
+                <div class="col-2"><?=$driver['Min'] / 100 ?></div>
+                <div class="col-2"><?=$driver['Max'] / 100?></div>
+                <div class="col-2">1</div>
+            </div>
+            <?php
+        }
+        ?>
+
     </div>
 
 </div>
@@ -173,7 +165,11 @@
     });
     spinner.spinner("value", 10);
 
-    $("#button-submit").click(function() {
+    $("#optimize-button").click(function() {
+        $("#buttons-div").show();
+    });
+
+    $("#download-button").click(function() {
         $.post(
             "optimize.php",
             $("#form-data").serialize(),
