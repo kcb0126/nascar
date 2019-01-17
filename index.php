@@ -69,7 +69,7 @@
 
     <div id="input-table" class="container p-3 border border-secondary">
         <div class="row">
-            <div class="col-1">ID</span></div>
+            <div class="col-1"><span>ID</span></div>
             <div class="col-4"><span>Driver</span></div>
             <div class="col-1"><span>Salary</span></div>
             <div class="col-2"><span>Min%</span></div>
@@ -102,12 +102,12 @@
 
     <div id="exposure-table" class="container p-3 border border-secondary" style="display: none;">
         <div class="row">
-            <div class="col-1">ID</span></div>
-            <div class="col-4"><span>Driver</span></div>
-            <div class="col-1"><span>Salary</span></div>
-            <div class="col-2"><span>Proj</span></div>
-            <div class="col-2"><span>Min LU</span></div>
-            <div class="col-2"><span>Max LU</span></div>
+            <div class="col-1">ID</div>
+            <div class="col-4">Driver</div>
+            <div class="col-1">Salary</div>
+            <div class="col-2">Proj</div>
+            <div class="col-2">Min LU</div>
+            <div class="col-2">Max LU</div>
         </div>
 
         <hr />
@@ -116,16 +116,39 @@
             ?>
             <div class="row mb-2">
                 <div class="col-1"><?=$driver['ID']?></div>
-                <div class="col-2"><?=$driver['Name']?></div>
+                <div class="col-4"><?=$driver['Name']?></div>
                 <div class="col-1">$<?=number_format($driver['Salary'])?></div>
                 <div class="col-2"><?=$driver['Proj']?></div>
                 <div class="col-2"><?=$driver['Min'] / 100 ?></div>
                 <div class="col-2"><?=$driver['Max'] / 100?></div>
-                <div class="col-2">1</div>
             </div>
             <?php
         }
         ?>
+
+    </div>
+
+    <div id="lineups-table" class="container p-3 border border-secondary" style="display: none;">
+        <div class="row">
+            <div class="col-2">D1</div>
+            <div class="col-2">D2</div>
+            <div class="col-2">D3</div>
+            <div class="col-2">D4</div>
+            <div class="col-2">D5</div>
+            <div class="col-2">D6</div>
+        </div>
+
+        <hr />
+        <div id="lineups-div">
+            <div class="row mb-2">
+                <div class="col-2"><?=$driver['ID']?></div>
+                <div class="col-2"><?=$driver['Name']?></div>
+                <div class="col-2">$<?=number_format($driver['Salary'])?></div>
+                <div class="col-2"><?=$driver['Proj']?></div>
+                <div class="col-2"><?=$driver['Min'] / 100 ?></div>
+                <div class="col-2"><?=$driver['Max'] / 100?></div>
+            </div>
+        </div>
 
     </div>
 
@@ -166,20 +189,40 @@
     spinner.spinner("value", 10);
 
     $("#optimize-button").click(function() {
+        $.post(
+            "lineups.php",
+            $("#form-data").serialize(),
+            function(resp) {
+                let lineupsDiv = $("#lineups-div");
+                lineupsDiv.empty();
+
+                resp.forEach(function(lineup) {
+                    let lineupHTML = '<div class="row mb-2">';
+                    lineup.forEach(function(player) {
+                        lineupHTML = lineupHTML + `<div class="col-2">${player}</div>`;
+                    });
+                    lineupHTML = lineupHTML + '</div>';
+                    lineupsDiv.append($(lineupHTML));
+                });
+            },
+            'JSON'
+        );
+
+
         $("#buttons-div").show();
     });
 
     $("#download-button").click(function() {
         $.post(
-            "optimize.php",
+            "download.php",
             $("#form-data").serialize(),
             function (resp) {
 
                 console.info(resp);
 
                 var link = document.createElement("a");
-                link.download = "result.csv";
-                link.href = "results/result.csv";
+                link.download = "output.csv";
+                link.href = "output.csv";
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -198,6 +241,7 @@
 
         $("#input-table").show();
         $("#exposure-table").hide();
+        $("#lineups-table").hide();
     });
 
     $("#exposure-button").click(function() {
@@ -208,6 +252,7 @@
 
         $("#input-table").hide();
         $("#exposure-table").show();
+        $("#lineups-table").hide();
     });
 
     $("#lineups-button").click(function() {
@@ -215,6 +260,10 @@
         $("#input-button").removeClass("btn-info").addClass("btn-light");
         $("#exposure-button").removeClass("btn-info").addClass("btn-light");
         $("#userguide-button").removeClass("btn-info").addClass("btn-light");
+
+        $("#lineups-table").show();
+        $("#input-table").hide();
+        $("#exposure-table").hide();
     });
 
     $("#userguide-button").click(function() {

@@ -8,9 +8,17 @@
 
 $handle = fopen("drivers.csv", "r");
 
+$fp = fopen('./input.csv', 'w');
+
 $drivers = [];
 
 $isHeader = true;
+
+$minsalary = $_POST['minsalary'];
+$maxsalary = $_POST['maxsalary'];
+$lineups = $_POST['lineups'];
+
+fputcsv($fp, [$minsalary, $maxsalary, $lineups]);
 
 while($data = fgetcsv($handle, 1000, ",")) {
     if($isHeader) {
@@ -25,42 +33,11 @@ while($data = fgetcsv($handle, 1000, ",")) {
         "Max" => $_POST['max' . $data[0]],
         "Proj" => $_POST['proj' . $data[0]],
     ];
-    $notused = 0;
+
+    fputcsv($fp, [$data[0], $data[1], $data[2], $_POST['min' . $data[0]], $_POST['max' . $data[0]], $_POST['proj' . $data[0]]]);
 }
 
-$minsalary = $_POST['minsalary'];
-$maxsalary = $_POST['maxsalary'];
-$lineups = $_POST['lineups'];
-
-$fp = fopen('./results/result.csv', 'w');
-
-
-$results = [];
-
-for($i = 0; $i < $lineups; $i++) {
-
-}
-
-while(count($results) < $lineups) {
-    $driver_ids = [];
-    $driver_ids[] = rand(0, count($drivers) - 1);
-    $driver_ids[] = rand(0, count($drivers) - 1);
-    $driver_ids[] = rand(0, count($drivers) - 1);
-    $driver_ids[] = rand(0, count($drivers) - 1);
-    $driver_ids[] = rand(0, count($drivers) - 1);
-    $driver_ids[] = rand(0, count($drivers) - 1);
-    sort($driver_ids);
-    $result = [];
-    foreach($driver_ids as $driver_id) {
-        $result[] = $drivers[$driver_id]["Name"];
-    }
-
-    $results[] = $result;
-
-    fputcsv($fp, $result);
-
-}
 
 fclose($fp);
 
-echo json_encode(["link" => "value"]);
+// exec("python3.6 main.py");
