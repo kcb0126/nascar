@@ -37,6 +37,7 @@ while($data = fgetcsv($handle, 1000, ",")) {
     fputcsv($fp, [$data[0], $data[1], $data[2], $_POST['min' . $data[0]], $_POST['max' . $data[0]], $_POST['proj' . $data[0]]]);
 }
 
+fclose($handle);
 
 fclose($fp);
 
