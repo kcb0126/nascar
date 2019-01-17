@@ -140,14 +140,6 @@
 
         <hr />
         <div id="lineups-div">
-            <div class="row mb-2">
-                <div class="col-2"><?=$driver['ID']?></div>
-                <div class="col-2"><?=$driver['Name']?></div>
-                <div class="col-2">$<?=number_format($driver['Salary'])?></div>
-                <div class="col-2"><?=$driver['Proj']?></div>
-                <div class="col-2"><?=$driver['Min'] / 100 ?></div>
-                <div class="col-2"><?=$driver['Max'] / 100?></div>
-            </div>
         </div>
 
     </div>
